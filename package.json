@@ -1,0 +1,13 @@
+{
+  "name": "ad-free-feed-v2",
+  "version": "0.0.1",
+  "author": "Igor Lukanin",
+  "scripts": {
+    "start": "NODE_ENV=production node src/app.js"
+  },
+  "dependencies": {
+    "config": "^1.16.0",
+    "console-debug": "^0.3.3",
+    "promise": "^7.1.1"
+  }
+}
