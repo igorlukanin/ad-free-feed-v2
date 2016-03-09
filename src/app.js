@@ -1,5 +1,7 @@
 var config = require('config'),
     instagram = require('instagram-node').instagram(),
+
+    db = require('./util/db'),
     log = require('./util/log');
 
 
@@ -59,12 +61,41 @@ instagram.use({ access_token: token });
 //     console.log(result);
 // });
 
-// instagram.user_search('igorlukanin.sandbox', function(err, result, remaining, limit) {
+var accounts = config.get("accounts");
+
+var addAccount = function(account, cb) {
+    instagram.user_search(account, function(err, result, remaining, limit) {
+        if (err || result.length == 0) {
+            return;
+        }
+
+        var id = result[0].id;
+
+        instagram.user(id, function(err, result, remaining, limit) {
+            if (err) {
+                console.log(account);
+                console.log(err);
+                return;
+            }
+
+            cb(result);
+        });
+    });
+};
+
+db.c.then(function(c) {
+    accounts.bad.forEach(function(account) {
+        addAccount(account, function(result) {
+            result.tag = 'bad';
+            db.accounts.insert(result).run(c);
+
+            console.log(account);
+        });
+    });
+});
+
+
+// instagram.set_user_relationship(sandbox_id, 'unblock', function(err, result, remaining, limit) {
 //     console.log(err);
 //     console.log(result);
 // });
-
-instagram.set_user_relationship(sandbox_id, 'block', function(err, result, remaining, limit) {
-    console.log(err);
-    console.log(result);
-});
