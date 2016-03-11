@@ -6,8 +6,10 @@
     "start": "NODE_ENV=production node src/app.js"
   },
   "dependencies": {
+    "brain": "^0.7.0",
     "config": "^1.16.0",
     "console-debug": "^0.3.3",
+    "emoji-regexp": "^1.0.0",
     "instagram-node": "^0.5.8",
     "promise": "^7.1.1",
     "rethinkdb": "^2.2.2"
