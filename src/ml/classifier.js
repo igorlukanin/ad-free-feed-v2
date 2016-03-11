@@ -3,8 +3,8 @@ var brain = require('brain'),
 
     account = require('./account'),
 
-    statePath = __dirname + '/state.json',
-    limitsPath = __dirname + '/limits.json';
+    statePath = __dirname + '/../../config/classifier-state.json',
+    limitsPath = __dirname + '/../../config/classifier-limits.json';
 
 
 var dummyClassifier = {
@@ -50,18 +50,23 @@ var trainClassifier = function(V, limits) {
 };
 
 var loadLimits = function() {
-    return fs.existsSync(limitsPath) ? require(limitsPath) : undefined;
+    return fs.existsSync(limitsPath) ? require(limitsPath) : {};
 };
 
 var applyLimits = function(x, limits) {
     for (feature in x) { if (x.hasOwnProperty(feature)) {
-        x[feature] = (x[feature] - limits[feature].min) / (limits[feature].max - limits[feature].min);
-        
-        if (x[feature] < 0) {
-            x[feature] = 0;
+        if (limits[feature]) {
+            x[feature] = (x[feature] - limits[feature].min) / (limits[feature].max - limits[feature].min);
+
+            if (x[feature] < 0) {
+                x[feature] = 0;
+            }
+            else if (x[feature] > 1) {
+                x[feature] = 1;
+            }
         }
-        else if (x[feature] > 1) {
-            x[feature] = 1;
+        else {
+            x[feature] = x[feature] == 0 ? 0 : 1;
         }
     }}
 

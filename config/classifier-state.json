@@ -1,0 +1,191 @@
+{
+  "layers": [
+    {
+      "bio_empty": {},
+      "bio_length": {},
+      "bio_emoji_count": {},
+      "bio_link_count": {},
+      "bio_email_count": {},
+      "bio_phone_count": {},
+      "bio_stop_word_count": {},
+      "bio_line_count": {},
+      "followers_count": {},
+      "following_count": {},
+      "media_count": {},
+      "media_followers_ratio": {},
+      "full_name_empty": {},
+      "full_name_length": {},
+      "website_empty": {}
+    },
+    {
+      "0": {
+        "bias": -0.0339658500856443,
+        "weights": {
+          "bio_empty": 0.24119923548827016,
+          "bio_length": -0.40903475429851455,
+          "bio_emoji_count": -0.18245905578903776,
+          "bio_link_count": 0.03958606726602634,
+          "bio_email_count": -0.09061979138928704,
+          "bio_phone_count": -0.5107101849250668,
+          "bio_stop_word_count": -0.37411362151589617,
+          "bio_line_count": -0.36258589483978654,
+          "followers_count": -0.265210093145303,
+          "following_count": -0.5736733840047438,
+          "media_count": 0.28074896780870123,
+          "media_followers_ratio": 0.245823649915937,
+          "full_name_empty": 0.009932912498102308,
+          "full_name_length": -0.35762359936637134,
+          "website_empty": 0.07382633273266408
+        }
+      },
+      "1": {
+        "bias": 0.8578347459939806,
+        "weights": {
+          "bio_empty": 0.9711632402254947,
+          "bio_length": -1.1650749849104556,
+          "bio_emoji_count": -0.8630250474594199,
+          "bio_link_count": -0.04580789194081601,
+          "bio_email_count": -0.06607751966415583,
+          "bio_phone_count": -0.8927944959419442,
+          "bio_stop_word_count": -0.7811551210829174,
+          "bio_line_count": -0.5959520128608983,
+          "followers_count": -0.19551803881191848,
+          "following_count": -1.3311398485630752,
+          "media_count": 1.3269213493141543,
+          "media_followers_ratio": 0.5576649770534142,
+          "full_name_empty": 0.04768212283198735,
+          "full_name_length": -1.002030152535341,
+          "website_empty": 0.4150359022036747
+        }
+      },
+      "2": {
+        "bias": -0.6923749665866662,
+        "weights": {
+          "bio_empty": -0.8569217194442148,
+          "bio_length": 1.1327341016931634,
+          "bio_emoji_count": 0.6469316703064903,
+          "bio_link_count": 0.033592372370447744,
+          "bio_email_count": -0.09963992345222895,
+          "bio_phone_count": 0.9820881705163298,
+          "bio_stop_word_count": 0.5010216310673546,
+          "bio_line_count": 0.6416324445337281,
+          "followers_count": 0.13753200170660107,
+          "following_count": 1.2536094469804342,
+          "media_count": -1.1120058900386671,
+          "media_followers_ratio": -0.5686300562796702,
+          "full_name_empty": -0.08773294125763476,
+          "full_name_length": 0.817830471153852,
+          "website_empty": -0.4477890401859589
+        }
+      },
+      "3": {
+        "bias": 0.2232507731078069,
+        "weights": {
+          "bio_empty": 0.4224245268249339,
+          "bio_length": -0.609334984181513,
+          "bio_emoji_count": -0.409905515471395,
+          "bio_link_count": 0.0166740727884229,
+          "bio_email_count": 0.03785212029405597,
+          "bio_phone_count": -0.6131819900331137,
+          "bio_stop_word_count": -0.2789685661133141,
+          "bio_line_count": -0.42071667364009263,
+          "followers_count": -0.14527299776763863,
+          "following_count": -0.46476170000192657,
+          "media_count": 0.34620880177683333,
+          "media_followers_ratio": 0.18045443993681315,
+          "full_name_empty": -0.10016288686897129,
+          "full_name_length": -0.5799627380726206,
+          "website_empty": 0.05340572895859873
+        }
+      },
+      "4": {
+        "bias": -0.7371425725500982,
+        "weights": {
+          "bio_empty": -0.7865589820828359,
+          "bio_length": 1.1897459798052215,
+          "bio_emoji_count": 0.5970618557962528,
+          "bio_link_count": 0.128589970237869,
+          "bio_email_count": 0.22991078908105037,
+          "bio_phone_count": 1.1224935013527904,
+          "bio_stop_word_count": 0.7657462809300385,
+          "bio_line_count": 0.6420446364524469,
+          "followers_count": 0.36888821486009976,
+          "following_count": 1.0681456409698573,
+          "media_count": -0.9784904949736609,
+          "media_followers_ratio": -0.5574226237357297,
+          "full_name_empty": -0.09156624548359318,
+          "full_name_length": 0.7729830350593051,
+          "website_empty": -0.4488210183142713
+        }
+      },
+      "5": {
+        "bias": -0.1358870541655678,
+        "weights": {
+          "bio_empty": -0.38798568799568495,
+          "bio_length": 0.2676588644476854,
+          "bio_emoji_count": -0.0033209736960189045,
+          "bio_link_count": 0.159758338499448,
+          "bio_email_count": 0.16272944413687765,
+          "bio_phone_count": 0.17287724924900844,
+          "bio_stop_word_count": 0.053297635730238914,
+          "bio_line_count": 0.13294651967644194,
+          "followers_count": 0.1834853383808118,
+          "following_count": 0.4663839178690965,
+          "media_count": -0.33334524632419127,
+          "media_followers_ratio": -0.061080092040755866,
+          "full_name_empty": 0.13209823753568253,
+          "full_name_length": 0.27902949357565265,
+          "website_empty": -0.26901005405356815
+        }
+      },
+      "6": {
+        "bias": 0.9652808057555246,
+        "weights": {
+          "bio_empty": 0.9951671318626416,
+          "bio_length": -1.128932344466313,
+          "bio_emoji_count": -0.8675510149980726,
+          "bio_link_count": 0.039080500603961885,
+          "bio_email_count": -0.25127236561233296,
+          "bio_phone_count": -1.2582946107271935,
+          "bio_stop_word_count": -0.8367128659118909,
+          "bio_line_count": -0.6835543331280705,
+          "followers_count": -0.3171465727271195,
+          "following_count": -1.270524448965535,
+          "media_count": 1.481203897335065,
+          "media_followers_ratio": 0.34648959997229073,
+          "full_name_empty": 0.026759286873714275,
+          "full_name_length": -1.0715457189974253,
+          "website_empty": 0.3953577770471267
+        }
+      }
+    },
+    {
+      "good": {
+        "bias": -0.01796803555734268,
+        "weights": {
+          "0": 0.7350716977137147,
+          "1": 2.52998106283704,
+          "2": -2.3338723043812712,
+          "3": 1.0553438609631052,
+          "4": -2.431266978053332,
+          "5": -0.4731149793162477,
+          "6": 2.67858950575785
+        }
+      },
+      "bad": {
+        "bias": 0.08622959102545,
+        "weights": {
+          "0": -0.8880856266377068,
+          "1": -2.5241085494433166,
+          "2": 2.3394726591241986,
+          "3": -0.9851104918011957,
+          "4": 2.2271280286783104,
+          "5": 0.6892277086594222,
+          "6": -2.762483394055418
+        }
+      }
+    }
+  ],
+  "outputLookup": true,
+  "inputLookup": true
+}
