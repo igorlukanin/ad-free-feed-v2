@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "author": "Igor Lukanin",
   "scripts": {
-    "start": "NODE_ENV=production node src/app.js"
+    "start": "NODE_ENV=production node src/app.js",
+    "train": "NODE_ENV=production node src/train.js"
   },
   "dependencies": {
     "brain": "^0.7.0",
