@@ -1,3 +1,16 @@
 {
-  "instagram": {}
+  "website": {
+    "port": 3005
+  },
+  "instagram": {
+    "client_id": "",
+    "client_secret": "",
+    "scopes": [ "public_content", "follower_list", "relationships" ],
+    "redirect_uri": "http://localhost:3005"
+  },
+  "rethinkdb": {
+    "host": "localhost",
+    "port": 28015,
+    "db": "ad_free_feed"
+  }
 }
