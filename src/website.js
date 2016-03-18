@@ -35,38 +35,7 @@ express()
     });
 
 
-// var instagram = require('instagram-node').instagram(),
 
-// instagram.use({
-//     client_id: config.get('instagram.client_id'),
-//     client_secret: config.get('instagram.client_secret')
-// });
-//
-// var redirectUri = instagram.get_authorization_url(config.get('instagram.redirect_uri'), {
-//     scope: config.get('instagram.scopes')
-// });
-//
-// console.log(redirectUri);
-
-
-// instagram.use({
-//     client_id: config.get('instagram.client_id'),
-//     client_secret: config.get('instagram.client_secret')
-// });
-//
-// // var code = '64d86ba3bd004023b8543145b6190358';
-// var code = 'f45b76fe3ee846ef9b0135c0f0d3e771';
-//
-// instagram.authorize_user(code, config.get('instagram.redirect_uri'), function(err, result) {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         // instagram.use({ access_token: result.access_token });
-//
-//         console.log(result.access_token);
-//         console.log(result.user.id);
-//     }
-// });
 
 // var id = '416385929';
 // var token = '416385929.571b6fe.86f8ef4f45974355ad5ff08f66be59a7';

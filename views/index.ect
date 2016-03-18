@@ -1,1 +1,8 @@
 <% extend 'layouts/default.ect' %>
+
+<p><a href="/login">Connect with Instagram</a></p>
+
+Connected accounts:
+<% for account in @accounts : %>
+<p><a href="/accounts/<%= account.id %>"><%= account.username %> (<%= account.full_name %>)</a></p>
+<% end %>
