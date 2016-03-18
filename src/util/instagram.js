@@ -9,6 +9,10 @@ instagram.use({
 });
 
 
+var useAccessToken = function(access_token) {
+    instagram.use({ access_token: access_token });
+};
+
 var getOAuthRedirectUrl = function() {
     return instagram.get_authorization_url(config.get('instagram.redirect_uri'), {
         scope: config.get('instagram.scopes')
@@ -22,10 +26,17 @@ var loadAccount = function(code) {
                 reject(err);
             }
             else {
-                var account = result.user;
-                account.access_token = result.access_token;
+                useAccessToken(result.access_token);
 
-                resolve(account);
+                instagram.user(result.user.id, function(err, accountInfo) {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    accountInfo.access_token = result.access_token;
+
+                    resolve(accountInfo);
+                });
             }
         });
     });
@@ -33,6 +44,7 @@ var loadAccount = function(code) {
 
 
 module.exports = {
+    useAccessToken: useAccessToken,
     getOAuthRedirectUrl: getOAuthRedirectUrl,
     loadAccount: loadAccount
 };
