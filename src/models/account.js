@@ -122,10 +122,10 @@ var updateFollowers = function(accountInfo, followers) {
 
 var enumerateRelatedAccounts = function(accountInfo) {
     return db.c.then(function(c) {
-        return db.accounts
-            .filter(db.r.row('related_to').contains(function(accountId) {
-                return accountId == accountInfo.id;
-            })).run(c)
+        return db.accounts_to_related
+            .filter({ account_id: accountInfo.id })
+            .eqJoin('related_id', db.accounts)
+            .run(c)
             .then(function(cursor) {
                 return cursor.toArray();
             });

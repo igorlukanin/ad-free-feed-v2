@@ -3,6 +3,6 @@
 <pre><%= JSON.stringify(@account, null, 2) %></pre>
 
 Related accounts:
-<% for account in @related : %>
-<p><%= account %></p>
+<% for @one in @related : %>
+<pre><%= JSON.stringify(@one, null, 2) %></pre>
 <% end %>
