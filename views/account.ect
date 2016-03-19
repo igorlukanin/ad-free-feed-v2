@@ -1,8 +1,16 @@
 <% extend 'layouts/default.ect' %>
 
+<h1><%= @account.full_name %>,</h1>
+
+<iframe src="//giphy.com/embed/Rg6Hdug5IEMXm" width="480" height="269" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="http://giphy.com/gifs/thank-you-adventure-time-finn-Rg6Hdug5IEMXm">via GIPHY</a></p>
+
+<% if false : %>
+
 <pre><%= JSON.stringify(@account, null, 2) %></pre>
 
 Related accounts:
 <% for @one in @related : %>
 <pre><%= JSON.stringify(@one, null, 2) %></pre>
+<% end %>
+
 <% end %>
