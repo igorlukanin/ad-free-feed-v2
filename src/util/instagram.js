@@ -14,6 +14,12 @@ var useAccessToken = function(access_token) {
 };
 
 var getOAuthRedirectUrl = function() {
+    // TODO: Remove ugly fix
+    instagram.use({
+        client_id: config.get('instagram.client_id'),
+        client_secret: config.get('instagram.client_secret')
+    });
+
     return instagram.get_authorization_url(config.get('instagram.redirect_uri'), {
         scope: config.get('instagram.scopes')
     });
