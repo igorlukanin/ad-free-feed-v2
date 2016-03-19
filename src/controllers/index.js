@@ -57,7 +57,8 @@ router.get('/accounts/:id', function(req, res) {
         .load(id)
         .then(function(accountInfo) {
             res.render('account', {
-                account: accountInfo
+                account: accountInfo,
+                related: accounts.enumerateRelated(accountInfo)
             });
         }, function(err) {
             handleAccountError(res, err);

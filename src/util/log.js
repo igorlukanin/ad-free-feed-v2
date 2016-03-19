@@ -10,7 +10,7 @@ var console = new debug({
 });
 
 var logAppState = function(app, message) {
-    console.info('Application ' + app + ': ' + message);
+    console.info(app + ': ' + message);
 };
 
 

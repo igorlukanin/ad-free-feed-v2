@@ -2,7 +2,7 @@ var config = require('config'),
     Promise = require('promise'),
     r = require('rethinkdb'),
 
-    tables = [ 'accounts' ];
+    tables = [ 'accounts', 'accounts_to_related', 'test' ];
 
 
 var options = {

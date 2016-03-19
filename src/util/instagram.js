@@ -19,32 +19,91 @@ var getOAuthRedirectUrl = function() {
     });
 };
 
+var loadFullInfo = function(accessToken, accountId) {
+    return new Promise(function(resolve, reject) {
+        useAccessToken(accessToken);
+
+        instagram.user(accountId, function(err, account) {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(account);
+        });
+    });
+};
+
 var loadAccount = function(code) {
     return new Promise(function(resolve, reject) {
         instagram.authorize_user(code, config.get('instagram.redirect_uri'), function(err, result) {
             if (err) {
                 reject(err);
+                return;
             }
-            else {
-                useAccessToken(result.access_token);
 
-                instagram.user(result.user.id, function(err, accountInfo) {
-                    if (err) {
-                        reject(err);
-                    }
+            loadFullInfo(result.access_token, result.user.id)
+                .then(function(account) {
+                    account.access_token = result.access_token;
 
-                    accountInfo.access_token = result.access_token;
-
-                    resolve(accountInfo);
+                    resolve(account);
+                }, function(err) {
+                    reject(err);
                 });
-            }
         });
     });
 };
 
+var loadFollowers = function(accountInfo, options) {
+    if (options == undefined) {
+        options = { all: true };
+    }
+    
+    return new Promise(function(resolve, reject) {
+        var followers = [];
+
+        var collectFollowers = function (err, result, pagination, remaining, limit) {
+            if (err) {
+                reject(err);
+                return;
+            }
+
+            Promise
+                .all(result.map(function(follower) {
+                    return loadFullInfo(accountInfo.access_token, follower.id)
+                        .catch(function(err) {
+                            // Skip all errors
+                            return null;
+                        });
+                }))
+                .then(function(result) {
+                    followers = followers.concat(result.filter(function(one) {
+                        // Filter erroneous results
+                        return one != null;
+                    }));
+
+                    if (options.all && pagination.next) {
+                        pagination.next(collectFollowers);
+                    }
+                    else {
+                        resolve(followers);
+                    }
+                });
+        };
+
+        useAccessToken(accountInfo.access_token);
+
+        instagram.user_followers(accountInfo.account_id, collectFollowers);
+    });
+};
+
+var loadRecentFollowers = function(accountInfo) {
+    return loadFollowers(accountInfo, { all: false })
+};
+
 
 module.exports = {
-    useAccessToken: useAccessToken,
     getOAuthRedirectUrl: getOAuthRedirectUrl,
-    loadAccount: loadAccount
+    loadAccount: loadAccount,
+    loadFollowers: loadFollowers,
+    loadRecentFollowers: loadRecentFollowers
 };
