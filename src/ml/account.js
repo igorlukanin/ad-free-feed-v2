@@ -3,7 +3,7 @@ var regex = {
     email: /\S+@\S+\.\S+/g,
     link: /(https?:\/\/[^\s]+)/g,
     phone: /[-+()\d ]{7,}/g,
-    stopWord: /(whatsapp|viber|direct|sms|vk\.com)/ig
+    stopWord: /(whatsapp|viber|direct|sms|vk\.com|vk\.cc)/ig
 };
 
 
@@ -13,8 +13,8 @@ var getDefaultClasses = function() {
 
 var toClasses = function(account) {
     return {
-        good: account.tag == 'good' ? 1 : 0,
-        bad: account.tag == 'bad' ? 1 : 0
+        good: account.tag != undefined && account.tag == 'good' ? 1 : 0,
+        bad: account.tag != undefined && account.tag == 'bad' ? 1 : 0
     };
 };
 

@@ -15,8 +15,13 @@ require('promise/lib/rejection-tracking').enable({
 log.appState('train', 'started');
 
 db.c.then(function(c) {
+    // TODO: Move data extraction to 'models/account.js'
     db
-        .accounts.run(c)
+        .accounts_to_related
+        .filter(db.r.row('tag'))
+        .eqJoin('related_id', db.accounts)
+        .zip()
+        .run(c)
         .then(function(cursor) {
             return cursor.toArray();
         })

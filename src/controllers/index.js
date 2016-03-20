@@ -1,5 +1,6 @@
 var router = require('express').Router(),
 
+    clf = require('../ml/classifier').load(),
     accounts = require('../models/account'),
     client = require('../util/instagram'),
     db = require('../util/db');
@@ -59,11 +60,32 @@ router.get('/accounts/:id', function(req, res) {
             accounts
                 .enumerateRelated(accountInfo)
                 .then(function(related) {
+                    related = related.map(function(account) {
+                        account.goodClassProbability = clf.getGoodClassProbability(account);
+                        account.goodClassRank = Math.floor(account.goodClassProbability * 4);
+
+                        return account;
+                    });
+
                     res.render('account', {
                         account: accountInfo,
                         related: related
                     });
                 });
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
+router.get('/accounts/:accountId/related/:relatedId/tag/:tag', function(req, res) {
+    var accountId = req.params.accountId,
+        relatedId = req.params.relatedId,
+        tag = req.params.tag;
+
+    accounts
+        .setTagToRelated(accountId, relatedId, tag)
+        .then(function() {
+            res.redirect('/accounts/' + accountId);
         }, function(err) {
             handleAccountError(res, err);
         });

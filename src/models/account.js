@@ -3,6 +3,7 @@ var Promise = require('promise'),
     db = require('../util/db');
 
 
+// TODO: Don't create ids in separate query
 var createEntityId = function(entity) {
     return db.c.then(function(c) {
         return db.r.uuid(entity.id).run(c);
@@ -125,11 +126,32 @@ var enumerateRelatedAccounts = function(accountInfo) {
         return db.accounts_to_related
             .filter({ account_id: accountInfo.id })
             .eqJoin('related_id', db.accounts)
+            .zip()
             .run(c)
             .then(function(cursor) {
                 return cursor.toArray();
             });
     });
+};
+
+var setTagToRelated = function(accountId, relatedId, tag) {
+    var validateTag = tag == 'good' || tag == 'bad'
+        ? Promise.resolve(tag)
+        : Promise.reject(tag);
+
+    var setTag = db.c
+        .then(function(c) {
+            return db
+                .accounts_to_related
+                .filter({
+                    account_id: accountId,
+                    related_id: relatedId
+                })
+                .update({ tag: tag })
+                .run(c);
+        });
+
+    return Promise.all([ validateTag, setTag ]);
 };
 
 
@@ -140,5 +162,6 @@ module.exports = {
     enumerate: enumerateAccounts,
     feedForUpdate: feedAccountsForUpdate,
     updateFollowers: updateFollowers,
-    enumerateRelated: enumerateRelatedAccounts
+    enumerateRelated: enumerateRelatedAccounts,
+    setTagToRelated: setTagToRelated
 };

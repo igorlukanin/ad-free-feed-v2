@@ -74,10 +74,14 @@ var applyLimits = function(x, limits) {
 };
 
 var init = function(clf, limits) {
+    var getGoodClassProbability = function(v) {
+        return clf.run(applyLimits(account.toFeatures(v), limits)).good;
+    };
+    
     var getScore = function(V) {
         var scores = V.map(function(v) {
             var score1 = account.toClasses(v).good;
-            var score2 = clf.run(applyLimits(account.toFeatures(v), limits)).good;
+            var score2 = getGoodClassProbability(v);
 
             return (score1 - score2) * (score1 - score2);
         });
@@ -86,6 +90,7 @@ var init = function(clf, limits) {
     };
 
     return {
+        getGoodClassProbability: getGoodClassProbability,
         getScore: getScore
     };
 };
