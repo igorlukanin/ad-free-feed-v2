@@ -50,5 +50,32 @@ router.get('/:accountId/related/:relatedId/tag/:tag', function(req, res) {
         });
 });
 
+router.get('/:accountId/related/:relatedId/block', function(req, res) {
+    var accountId = req.params.accountId,
+        relatedId = req.params.relatedId,
+        type = 'manual';
+
+    accounts
+        .blockRelated(accountId, relatedId, type)
+        .then(function() {
+            res.redirect('/accounts/' + accountId);
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
+router.get('/:accountId/related/:relatedId/unblock', function(req, res) {
+    var accountId = req.params.accountId,
+        relatedId = req.params.relatedId;
+
+    accounts
+        .unblockRelated(accountId, relatedId)
+        .then(function() {
+            res.redirect('/accounts/' + accountId);
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
 
 module.exports = router;

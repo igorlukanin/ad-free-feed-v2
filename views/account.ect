@@ -13,6 +13,9 @@
     <td><%= @row.tag %></td>
     <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/tag/good">Good</a></td>
     <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/tag/bad">Bad</a></td>
+    <td><%= @row.block %></td>
+    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/block">Block</a></td>
+    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/unblock">Unblock</a></td>
 </tr>
 
 <% end %>

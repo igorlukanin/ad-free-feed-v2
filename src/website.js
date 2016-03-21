@@ -33,9 +33,3 @@ express()
     .listen(port, function() {
         log.appState('website', 'started at port ' + port);
     });
-
-
-// instagram.set_user_relationship(sandbox_id, 'unblock', function(err, result, remaining, limit) {
-//     console.log(err);
-//     console.log(result);
-// });

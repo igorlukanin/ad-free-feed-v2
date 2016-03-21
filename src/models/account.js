@@ -1,5 +1,6 @@
 var Promise = require('promise'),
 
+    client = require('../util/instagram'),
     db = require('../util/db');
 
 
@@ -154,6 +155,66 @@ var setTagToRelated = function(accountId, relatedId, tag) {
     return Promise.all([ validateTag, setTag ]);
 };
 
+var blockRelated = function(accountId, relatedId, type) {
+    var validateType = type == 'manual' || type == 'auto'
+        ? Promise.resolve(type)
+        : Promise.reject(type);
+    
+    var loadAccountInfo = loadAccount(accountId),
+        loadRelatedInfo = loadAccount(relatedId);
+
+    var performBlock = Promise
+        .all([ loadAccountInfo, loadRelatedInfo ])
+        .then(function(result) {
+            var accountInfo = result[0],
+                relatedInfo = result[1];
+
+            return client.blockRelatedAccount(accountInfo, relatedInfo);
+        });
+
+    var registerBlock = db.c
+        .then(function(c) {
+            return db
+                .accounts_to_related
+                .filter({
+                    account_id: accountId,
+                    related_id: relatedId
+                })
+                .update({ block: type })
+                .run(c);
+        });
+
+    return Promise.all([ validateType, performBlock, registerBlock ]);
+};
+
+var unblockRelated = function(accountId, relatedId) {
+    var loadAccountInfo = loadAccount(accountId),
+        loadRelatedInfo = loadAccount(relatedId);
+
+    var performBlock = Promise
+        .all([ loadAccountInfo, loadRelatedInfo ])
+        .then(function(result) {
+            var accountInfo = result[0],
+                relatedInfo = result[1];
+
+            return client.unblockRelatedAccount(accountInfo, relatedInfo);
+        });
+
+    var registerBlock = db.c
+        .then(function(c) {
+            return db
+                .accounts_to_related
+                .filter({
+                    account_id: accountId,
+                    related_id: relatedId
+                })
+                .replace(db.r.row.without('block'))
+                .run(c);
+        });
+
+    return Promise.all([ performBlock, registerBlock ]);
+};
+
 
 module.exports = {
     create: createAccount,
@@ -163,5 +224,7 @@ module.exports = {
     feedForUpdate: feedAccountsForUpdate,
     updateFollowers: updateFollowers,
     enumerateRelated: enumerateRelatedAccounts,
-    setTagToRelated: setTagToRelated
+    setTagToRelated: setTagToRelated,
+    blockRelated: blockRelated,
+    unblockRelated: unblockRelated
 };

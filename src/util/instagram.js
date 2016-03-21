@@ -106,10 +106,28 @@ var loadRecentFollowers = function(accountInfo) {
     return loadFollowers(accountInfo, { all: false })
 };
 
+var blockRelatedAccount = function(accountInfo, relatedInfo) {
+    useAccessToken(accountInfo.access_token);
+
+    var block = Promise.denodeify(instagram.set_user_relationship);
+
+    return block(relatedInfo.account_id, 'block');
+};
+
+var unblockRelatedAccount = function(accountInfo, relatedInfo) {
+    useAccessToken(accountInfo.access_token);
+
+    var unblock = Promise.denodeify(instagram.set_user_relationship);
+
+    return unblock(relatedInfo.account_id, 'unblock');
+};
+
 
 module.exports = {
     getOAuthRedirectUrl: getOAuthRedirectUrl,
     loadAccount: loadAccount,
     loadFollowers: loadFollowers,
-    loadRecentFollowers: loadRecentFollowers
+    loadRecentFollowers: loadRecentFollowers,
+    blockRelatedAccount: blockRelatedAccount,
+    unblockRelatedAccount: unblockRelatedAccount
 };
