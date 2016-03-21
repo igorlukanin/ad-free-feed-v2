@@ -77,5 +77,29 @@ router.get('/:accountId/related/:relatedId/unblock', function(req, res) {
         });
 });
 
+router.get('/:accountId/watch', function(req, res) {
+    var accountId = req.params.accountId;
+
+    accounts
+        .watch(accountId)
+        .then(function() {
+            res.redirect('/accounts/' + accountId);
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
+router.get('/:accountId/unwatch', function(req, res) {
+    var accountId = req.params.accountId;
+
+    accounts
+        .unwatch(accountId)
+        .then(function() {
+            res.redirect('/accounts/' + accountId);
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
 
 module.exports = router;

@@ -2,6 +2,12 @@
 
 <h1><%= @account.full_name %></h1>
 
+<p><%= @account.watch %></p>
+<p>
+    <a href="/accounts/<%= @account.id %>/watch">Watch & autoblock</a>,
+    <a href="/accounts/<%= @account.id %>/unwatch">Unwatch</a>
+</p>
+
 <table>
 <% for @row in @related : %>
 

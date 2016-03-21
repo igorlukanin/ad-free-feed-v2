@@ -215,6 +215,28 @@ var unblockRelated = function(accountId, relatedId) {
     return Promise.all([ performBlock, registerBlock ]);
 };
 
+var watchAccount = function(accountId) {
+    return db.c
+        .then(function(c) {
+            return db
+                .accounts
+                .get(accountId)
+                .update({ watch: true })
+                .run(c);
+        });
+};
+
+var unwatchAccount = function(accountId) {
+    return db.c
+        .then(function(c) {
+            return db
+                .accounts
+                .get(accountId)
+                .replace(db.r.row.without('watch'))
+                .run(c);
+        });
+};
+
 
 module.exports = {
     create: createAccount,
@@ -226,5 +248,7 @@ module.exports = {
     enumerateRelated: enumerateRelatedAccounts,
     setTagToRelated: setTagToRelated,
     blockRelated: blockRelated,
-    unblockRelated: unblockRelated
+    unblockRelated: unblockRelated,
+    watch: watchAccount,
+    unwatch: unwatchAccount
 };
