@@ -1,12 +1,20 @@
 <% extend 'layouts/default.ect' %>
 
-<p><a href="/login">Connect with Instagram</a></p>
+<div class="landing-box">
+    <div class="landing-box-visual"></div><!--
 
-<% if true : %>
+    --><div class="landing-box-text">
+        <p class="landing-box-title">No more distraction</p>
+        <p>Are you tired of inhuman followers and&nbsp;ill advertisers?</p>
 
-Connected accounts:
-<% for account in @accounts : %>
-<p><a href="/accounts/<%= account.id %>"><%= account.username %> (<%= account.full_name %>)</a></p>
-<% end %>
+        <a class="cta-button" href="/login">Block them once and for all</a>
 
-<% end %>
+        <p class="landing-box-note">You will be redirected to Instagram and&nbsp;asked&nbsp;to&nbsp;authorize this application.</p>
+        <p class="landing-box-note">It's safe for your account, secure and free.</p>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<!-- TODO: Add link to Github -->
+<!-- TODO: Add 'abouts' -->
