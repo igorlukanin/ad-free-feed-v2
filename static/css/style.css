@@ -44,9 +44,57 @@ p {
     margin: 4em 0 .5em 0;
 }
 
-.landing-box-note {
-    color: #666;
-    font-size: 14pt;
+.profile {
+    text-align: center;
+}
+
+.profile-counts {
+    margin: 4em 0 2em;
+}
+
+.profile-count {
+    font-size: 40px;
+}
+
+.profile-related {
+
+}
+
+.profile-related-accounts {
+    text-align: center;
+    padding: 0 10%;
+    column-count: 6;
+    column-gap: .5em;
+}
+
+.profile-related-account {
+    margin: 0 .2em;
+}
+
+.profile-related-accounts__offset {
+    margin-left: 50px;
+}
+
+.profile-related-account-image {
+    opacity: .8;
+    transition: opacity 0.5s ease;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.profile-related-account-image:hover {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.profile-related-account__good {
+    border: solid 3px #00a388;
+}
+
+.profile-related-account__bad {
+    border: solid 3px #e74c3c;
+}
+
 .landing-box .cta-button {
     margin-left: -1.25em;
 }
