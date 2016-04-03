@@ -8,6 +8,7 @@
     "website": "NODE_ENV=production node src/website.js"
   },
   "dependencies": {
+    "angular": "^1.5.3",
     "brain": "^0.7.0",
     "compression": "^1.6.1",
     "config": "^1.16.0",
@@ -17,6 +18,7 @@
     "express": "^4.13.4",
     "instagram-node": "^0.5.8",
     "promise": "^7.1.1",
+    "purecss": "^0.6.0",
     "rethinkdb": "^2.2.2"
   }
 }

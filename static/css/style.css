@@ -4,7 +4,7 @@ body {
     font-size: 20px;
     font-weight: 100;
     line-height: 1.5em;
-    margin: 4em 2em;
+    margin: 2em;
 }
 
 p {
@@ -22,11 +22,15 @@ p {
 }
 
 .landing-box-visual {
-    background: url('/static/img/iphone.jpeg') 50% 50% no-repeat;
     background-size: contain;
     display: inline-block;
-    height: 780px;
+    text-align: center;
     width: 60%
+}
+
+.landing-box-visual .fotorama {
+    margin: auto;
+    width: 370px;
 }
 
 .landing-box-text {
