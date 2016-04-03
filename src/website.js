@@ -20,6 +20,9 @@ require('promise/lib/rejection-tracking').enable({
 
 express()
     .use('/static', express.static('static'))
+    .use('/static/js/angular.min.js', express.static('node_modules/angular/angular.min.js'))
+    .use('/static/js/angular.min.js.map', express.static('node_modules/angular/angular.min.js.map'))
+    .use('/static/css/pure-grid.min.css', express.static('node_modules/purecss/build/grids-min.css'))
 
     .use(compression())
     .use(controllers)
