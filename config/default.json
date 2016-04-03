@@ -5,8 +5,7 @@
   "instagram": {
     "client_id": "",
     "client_secret": "",
-    "scopes": [ "relationships" ],
-    "scopes_for_moderation": [ "public_content", "follower_list", "relationships" ],
+    "scopes": [ "follower_list", "relationships" ],
     "redirect_uri": "http://localhost:3005/login/complete"
   },
   "rethinkdb": {

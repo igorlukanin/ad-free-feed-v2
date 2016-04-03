@@ -1,6 +1,6 @@
 {
-  "name": "ad-free-feed-v2",
-  "version": "0.0.1",
+  "name": "less-distraction",
+  "version": "0.0.2",
   "author": "Igor Lukanin",
   "scripts": {
     "collect": "NODE_ENV=production node src/collect.js",
