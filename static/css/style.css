@@ -56,43 +56,29 @@ p {
     font-size: 40px;
 }
 
-.profile-related {
+.profile-related {}
 
-}
+.profile-related-accounts {}
 
-.profile-related-accounts {
-    text-align: center;
-    padding: 0 10%;
-    column-count: 6;
-    column-gap: .5em;
-}
-
-.profile-related-account {
-    margin: 0 .2em;
-}
-
-.profile-related-accounts__offset {
-    margin-left: 50px;
-}
-
-.profile-related-account-image {
+.profile-avatar-image, .profile-related-account {
+    border-radius: 50%;
+    margin: 0 .5em;
+    width: 100px;
     opacity: .8;
     transition: opacity 0.5s ease;
-    width: 100%;
-    border-radius: 50%;
 }
 
-.profile-related-account-image:hover {
+.profile-related-account:hover {
     opacity: 1;
     transition: opacity 0.5s ease;
 }
 
-.profile-related-account__good {
-    border: solid 3px #00a388;
+.profile-avatar-image, .profile-related-account__good {
+    border: solid 3px #ccc;
 }
 
 .profile-related-account__bad {
-    border: solid 3px #e74c3c;
+    border: solid 3px #ffd34e;
 }
 
 .landing-box .cta-button {

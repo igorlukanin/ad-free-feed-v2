@@ -16,19 +16,32 @@ router.get('/:id', function(req, res) {
     accounts
         .load(id)
         .then(function(accountInfo) {
+            res.render('account', {
+                account: accountInfo
+            });
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
+router.get('/:id/related.json', function(req, res) {
+    var id = req.params.id;
+
+    accounts
+        .load(id)
+        .then(function(accountInfo) {
             accounts
                 .enumerateRelated(accountInfo)
                 .then(function(related) {
                     related = related.map(function(account) {
                         account.goodClassProbability = clf.getGoodClassProbability(account);
-                        account.goodClassRank = Math.floor(account.goodClassProbability * 4);
 
                         return account;
                     });
 
-                    res.render('account', {
-                        account: accountInfo,
-                        related: related
+                    res.json({
+                        good: related.filter(function(account) { return account.goodClassProbability >= .5; }),
+                        bad: related.filter(function(account) { return account.goodClassProbability < .5; })
                     });
                 });
         }, function(err) {

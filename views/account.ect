@@ -1,28 +1,70 @@
 <% extend 'layouts/default.ect' %>
 
-<h1><%= @account.full_name %></h1>
+<div class="profile" ng-controller="RelatedCtrl">
+    <div class="pure-g">
+        <div class="pure-u-1-2 profile-avatar">
+            <a href="https://instagram.com/<%= @account.username %>" target="_blank">
+                <img class="profile-avatar-image" src="<%= @account.profile_picture %>"/>
+            </a>
+        </div>
+        <div class="pure-u-1-2">
+            <a class="cta-button" href="#">Mute all bots now</a>
 
-<p><%= @account.watch %></p>
-<p>
-    <a href="/accounts/<%= @account.id %>/watch">Watch & autoblock</a>,
-    <a href="/accounts/<%= @account.id %>/unwatch">Unwatch</a>
-</p>
+            <p class="cta-note">In the future, new bots will be muted too.</p>
+        </div>
+    </div>
 
-<table>
-<% for @row in @related : %>
+    <div class="pure-g profile-counts">
+        <div class="pure-u-1-2 profile-count">{{ related.good.length }} friends</div>
+        <div class="pure-u-1-2 profile-count">{{ related.bad.length }} bots</div>
+    </div>
 
-<tr class="good_<%= @row.goodClassRank %>">
-    <!--<td><pre><%= JSON.stringify(@row, null, 2) %></pre></td>-->
-    <td><a href="http://instagram.com/<%= @row.username %>" target="_blank"><%= @row.username %></a></td>
-    <td><%= @row.full_name %></td>
-    <td><%= Math.round(@row.goodClassProbability.toFixed(2) * 100) %></td>
-    <td><%= @row.tag %></td>
-    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/tag/good">Good</a></td>
-    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/tag/bad">Bad</a></td>
-    <td><%= @row.block %></td>
-    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/block">Block</a></td>
-    <td><a href="/accounts/<%= @account.id %>/related/<%= @row.id %>/unblock">Unblock</a></td>
-</tr>
+    <div class="pure-g profile-related">
+        <div class="pure-u-1-2">
+            <div class="profile-related-accounts">
+                <div><a ng-repeat="account in related.good | accountLine:0" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__good" src="{{ account.profile_picture }}"/></a></div>
+                <div><a ng-repeat="account in related.good | accountLine:1" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__good" src="{{ account.profile_picture }}"/></a></div>
+                <div><a ng-repeat="account in related.good | accountLine:2" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__good" src="{{ account.profile_picture }}"/></a></div>
+            </div>
+        </div>
+        <div class="pure-u-1-2">
+            <div class="profile-related-accounts">
+                <div><a ng-repeat="account in related.bad | accountLine:0" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__bad" src="{{ account.profile_picture }}"/></a></div>
+                <div><a ng-repeat="account in related.bad | accountLine:1" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__bad" src="{{ account.profile_picture }}"/></a></div>
+                <div><a ng-repeat="account in related.bad | accountLine:2" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__bad" src="{{ account.profile_picture }}"/></a></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<% end %>
-</table>
+<script>
+    var app = angular.module('app', []);
+
+    app.controller('RelatedCtrl', ['$scope', '$http', function($scope, $http) {
+        $scope.related = {
+            good: [],
+            bad: []
+        };
+
+        $http.get('/accounts/<%= @account.id %>/related.json').success(function(related) {
+            $scope.related = related;
+        });
+    }]);
+
+    app.filter('accountLine', function() {
+        var lineCount = 3.5;
+
+        return function(accounts, line) {
+            var count = line % 2 == 0 ? Math.floor(lineCount) : Math.ceil(lineCount),
+                    offset = Math.floor(line * lineCount);
+
+            return accounts.slice(offset, offset + count);
+        };
+    });
+
+    app.filter('accountTooltip', function() {
+        return function(account) {
+            return account.full_name + (account.bio ? "\n\n" + account.bio : "");
+        };
+    });
+</script>
