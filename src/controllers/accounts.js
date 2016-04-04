@@ -1,4 +1,5 @@
-var router = require('express').Router(),
+var Promise = require('promise'),
+    router = require('express').Router(),
     
     accounts = require('../models/account'),
     clf = require('../ml/classifier').load();
@@ -108,6 +109,37 @@ router.get('/:accountId/unwatch', function(req, res) {
     accounts
         .unwatch(accountId)
         .then(function() {
+            res.redirect('/accounts/' + accountId);
+        }, function(err) {
+            handleAccountError(res, err);
+        });
+});
+
+router.get('/:accountId/block-and-watch', function(req, res) {
+    var accountId = req.params.accountId,
+        type = 'manual';
+
+    var block = accounts
+        .load(accountId)
+        .then(function(accountInfo) {
+            return accounts
+                .enumerateRelated(accountInfo)
+                .then(function(related) {
+                    related = related.filter(function(account) {
+                        return clf.getGoodClassProbability(account) > 0.5;
+                    }).map(function(account) {
+                        return accounts.blockRelated(accountId, account.id, type);
+                    });
+
+                    return Promise.all(related);
+                });
+        });
+
+    var watch = accounts.watch(accountId);
+
+    Promise
+        .all([block, watch])
+        .then(function(result) {
             res.redirect('/accounts/' + accountId);
         }, function(err) {
             handleAccountError(res, err);
