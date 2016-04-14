@@ -5,11 +5,11 @@
   },
   "bio_length": {
     "min": 0,
-    "max": 153
+    "max": 152
   },
   "bio_emoji_count": {
     "min": 0,
-    "max": 13
+    "max": 11
   },
   "bio_link_count": {
     "min": 0,
@@ -21,7 +21,7 @@
   },
   "bio_phone_count": {
     "min": 0,
-    "max": 3
+    "max": 2
   },
   "bio_stop_word_count": {
     "min": 0,
@@ -29,23 +29,23 @@
   },
   "bio_line_count": {
     "min": 1,
-    "max": 8
+    "max": 7
   },
   "followers_count": {
-    "min": 13,
-    "max": 14819
+    "min": 11,
+    "max": 10823
   },
   "following_count": {
-    "min": 0,
-    "max": 7492
+    "min": 20,
+    "max": 7501
   },
   "media_count": {
-    "min": 4,
-    "max": 2036
+    "min": 0,
+    "max": 3126
   },
   "media_followers_ratio": {
-    "min": 0.0026595744680851063,
-    "max": 20.181818181818183
+    "min": 0,
+    "max": 10.185483870967742
   },
   "full_name_empty": {
     "min": 0,
@@ -53,7 +53,7 @@
   },
   "full_name_length": {
     "min": 0,
-    "max": 30
+    "max": 31
   },
   "website_empty": {
     "min": 0,

@@ -33,8 +33,8 @@ db.c.then(function(c) {
                 old_score = old.getScore(accounts),
                 trained_score = trained.getScore(accounts);
 
-            log.appState('train', 'old score: ' + old_score);
-            log.appState('train', 'new score: ' + trained_score);
+            log.appState('train', 'old score: ' + old_score.toFixed(6));
+            log.appState('train', 'new score: ' + trained_score.toFixed(6));
 
             if (trained_score < old_score) {
                 clf.update(accounts);
