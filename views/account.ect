@@ -7,16 +7,30 @@
                 <img class="profile-avatar-image" src="<%= @account.profile_picture %>"/>
             </a>
         </div>
-        <div class="pure-u-1-2">
-            <a class="cta-button" href="/accounts/<%= @account.id %>/block-and-watch">Mute all bots now</a>
+        <div ng-if="<%= @account.watch == true ? "true" : "false" %>" class="pure-u-1-2">
+            <p class="cta-note"><br/>We're looking after your account.<br/>New bots will be blocked automagically.</p>
+        </div>
+        <div ng-if="!<%= @account.watch == true ? "true" : "false" %>" class="pure-u-1-2">
+            <a ng-if="related.bad.length > 0" class="cta-button" href="/accounts/<%= @account.id %>/block-and-watch">Block all bots now</a>
+            <a ng-if="related.bad.length == 0" class="cta-button cta-button__disabled">Block all bots now</a>
 
-            <p class="cta-note">In the future, new bots will be muted too.</p>
+            <p class="cta-note">In the future, new bots will be blocked too.</p>
         </div>
     </div>
 
-    <div class="pure-g profile-counts">
-        <div class="pure-u-1-2 profile-count">{{ related.good.length }} friends</div>
-        <div class="pure-u-1-2 profile-count">{{ related.bad.length }} bots</div>
+    <div ng-if="loading" class="profile-counts profile-counts__loading">
+        <p class="profile-count">Loading friends and bots...
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </p>
+    </div>
+
+    <div ng-if="!loading" class="pure-g profile-counts">
+        <div class="pure-u-1-2 profile-count">{{ related.good.length > 0 ? related.good.length : "No" }} friends</div>
+        <div class="pure-u-1-2 profile-count">{{ related.bad.length > 0 ? related.bad.length : "No" }} bots</div>
     </div>
 
     <div class="pure-g profile-related">
@@ -33,20 +47,47 @@
                 <div><a ng-repeat="account in related.bad | accountLine:1" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__bad" src="{{ account.profile_picture }}"/></a></div>
                 <div><a ng-repeat="account in related.bad | accountLine:2" href="https://instagram.com/{{ account.username }}" target="_blank" title="{{ account | accountTooltip }}"><img class="profile-related-account profile-related-account__bad" src="{{ account.profile_picture }}"/></a></div>
             </div>
+            <div ng-if="<%= @account.watch == true ? "true" : "false" %>">
+                <br/>
+                <p class="cta-note"><br/>Check Instagram on your phone. Do you like it?</p>
+                <a ng-if="related.bad.length == 0" class="cta-button" href="https://twitter.com/intent/tweet?text=Tired%20of%20inhuman%20followers%20and%20ill%20advertisers%20on%20Instagram%3F%20This%20app%20will%20help%3A&amp;url=http%3A%2F%2Fless.igor.lukanin.name" target="_blank">Share with friends on Twitter</a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length; i; i -= 1) {
+            j = Math.floor(Math.random() * i);
+            x = a[i - 1];
+            a[i - 1] = a[j];
+            a[j] = x;
+        }
+    }
+
     var app = angular.module('app', []);
 
     app.controller('RelatedCtrl', ['$scope', '$http', function($scope, $http) {
+        $scope.loading = true;
+
         $scope.related = {
             good: [],
             bad: []
         };
 
         $http.get('/accounts/<%= @account.id %>/related.json').success(function(related) {
+            $scope.loading = false;
+
+            if (<%= @account.watch == true ? "true" : "false" %>) {
+                related.bad = [];
+            }
+
+            // Let it be different every time the page is loaded
+            shuffle(related.good);
+            shuffle(related.bad);
+
             $scope.related = related;
         });
     }]);

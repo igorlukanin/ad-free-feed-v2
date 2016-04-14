@@ -1,4 +1,5 @@
-var Promise = require('promise'),
+var config = require('config'),
+    Promise = require('promise'),
     router = require('express').Router(),
     
     accounts = require('../models/account'),
@@ -31,20 +32,37 @@ router.get('/:id/related.json', function(req, res) {
     accounts
         .load(id)
         .then(function(accountInfo) {
-            accounts
-                .enumerateRelated(accountInfo)
-                .then(function(related) {
-                    related = related.map(function(account) {
-                        account.goodClassProbability = clf.getGoodClassProbability(account);
+            var attempts = 0;
 
-                        return account;
-                    });
+            var retry = function() {
+                if (attempts++ > config.get('website.collect_retry_max_attempts')) {
+                    res.json({ good: [], bad: [] });
+                    return;
+                }
 
-                    res.json({
-                        good: related.filter(function(account) { return account.goodClassProbability >= .5; }),
-                        bad: related.filter(function(account) { return account.goodClassProbability < .5; })
+                accounts
+                    .enumerateRelated(accountInfo)
+                    .then(function(related) {
+                        if (related.length == 0) {
+                            // Probably still loading, lets retry in a few seconds
+                            setTimeout(retry, config.get('website.collect_retry_interval_ms'));
+                            return;
+                        }
+
+                        related = related.map(function(account) {
+                            account.goodClassProbability = clf.getGoodClassProbability(account);
+
+                            return account;
+                        });
+
+                        res.json({
+                            good: related.filter(function(account) { return account.goodClassProbability >= .5; }),
+                            bad: related.filter(function(account) { return account.goodClassProbability < .5; })
+                        });
                     });
-                });
+            };
+
+            retry();
         }, function(err) {
             handleAccountError(res, err);
         });
@@ -119,6 +137,8 @@ router.get('/:accountId/block-and-watch', function(req, res) {
     var accountId = req.params.accountId,
         type = 'manual';
 
+    var one = false;
+
     var block = accounts
         .load(accountId)
         .then(function(accountInfo) {
@@ -126,8 +146,14 @@ router.get('/:accountId/block-and-watch', function(req, res) {
                 .enumerateRelated(accountInfo)
                 .then(function(related) {
                     related = related.filter(function(account) {
-                        return clf.getGoodClassProbability(account) > 0.5;
+                        return clf.getGoodClassProbability(account) < 0.5;
                     }).map(function(account) {
+                        if (one) {
+                            return Promise.resolve('two');
+                        }
+                        one = true;
+                        console.log('Blocking:');
+                        console.log(account);
                         return accounts.blockRelated(accountId, account.id, type);
                     });
 
@@ -142,7 +168,9 @@ router.get('/:accountId/block-and-watch', function(req, res) {
         .then(function(result) {
             res.redirect('/accounts/' + accountId);
         }, function(err) {
-            handleAccountError(res, err);
+            // TODO: Change after approval
+            res.redirect('/accounts/' + accountId);
+            // handleAccountError(res, err);
         });
 });
 

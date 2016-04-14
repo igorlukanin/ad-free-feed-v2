@@ -1,6 +1,8 @@
 {
   "website": {
-    "port": 3005
+    "port": 3005,
+    "collect_retry_interval_ms": 3000,
+    "collect_retry_max_attempts": 10
   },
   "instagram": {
     "client_id": "",
