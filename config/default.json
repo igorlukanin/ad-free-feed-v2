@@ -13,5 +13,8 @@
     "host": "localhost",
     "port": 28015,
     "db": "ad_free_feed"
+  },
+  "collect-ctrl": {
+    "restart_interval_ms": 900000
   }
 }

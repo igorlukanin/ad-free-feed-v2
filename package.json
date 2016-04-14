@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "author": "Igor Lukanin",
   "scripts": {
-    "collect": "NODE_ENV=production node src/collect.js",
+    "collect": "NODE_ENV=production node src/collect-ctrl.js",
     "train": "NODE_ENV=production node src/train.js",
     "website": "NODE_ENV=production node src/website.js"
   },
