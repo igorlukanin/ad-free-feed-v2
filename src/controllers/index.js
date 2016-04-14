@@ -3,6 +3,12 @@ var router = require('express').Router(),
     accounts = require('../models/account');
 
 
+var handleIndexError = function(res, err) {
+    res.render('errors/account', {
+        err: err
+    });
+};
+
 router.get('/', function(req, res) {
     accounts
         .enumerate()
@@ -11,7 +17,7 @@ router.get('/', function(req, res) {
                 accounts: accountInfos
             });
         }, function(err) {
-            handleAccountError(res, err);
+            handleIndexError(res, err);
         });
 });
 
