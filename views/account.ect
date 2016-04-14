@@ -3,7 +3,7 @@
 <div class="profile" ng-controller="RelatedCtrl">
     <div class="pure-g">
         <div class="pure-u-1-2 profile-avatar">
-            <a href="https://instagram.com/<%= @account.username %>" target="_blank">
+            <a href="https://instagram.com/<%= @account.username %>" target="_blank" title="{{ account | accountTooltip }}">
                 <img class="profile-avatar-image" src="<%= @account.profile_picture %>"/>
             </a>
         </div>
@@ -70,6 +70,8 @@
     var app = angular.module('app', []);
 
     app.controller('RelatedCtrl', ['$scope', '$http', function($scope, $http) {
+        $scope.account = <%- JSON.stringify(@account) %>;
+
         $scope.loading = true;
 
         $scope.related = {
