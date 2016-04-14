@@ -1,10 +1,10 @@
 body {
     color: #333;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 100;
     line-height: 1.5em;
-    margin: 2em;
+    margin: 0 6em;
 }
 
 p {
@@ -21,27 +21,39 @@ p {
     width: 100%;
 }
 
-.landing-box-visual {
-    background-size: contain;
-    display: inline-block;
-    text-align: center;
-    width: 60%
+.landing-box > * {
+    height: 1000px;
+    vertical-align: top;
 }
 
-.landing-box-visual .fotorama {
-    margin: auto;
-    width: 370px;
+.landing-box-visual {
+    background: url('/static/img/iphone.png') 0 -190px no-repeat;
+    display: inline-block;
+    width: 45%;
 }
 
 .landing-box-text {
     display: inline-block;
-    vertical-align: top;
-    width: 40%;
+    padding-top: 4em;
+    width: 55%;
+}
+
+.landing-box-text > * {
+    margin: 0 17.5%;
 }
 
 .landing-box-title {
-    font-size: 40px;
-    margin: 4em 0 .5em 0;
+    color: #666;
+    font-size: 35px;
+    font-weight: 400;
+    margin-bottom: 0.75em;
+}
+
+.landing-box-subtitle {
+    color: #666;
+    font-size: 30px;
+    line-height: 1.25em;
+    margin-bottom: 1em;
 }
 
 .profile {
@@ -82,30 +94,32 @@ p {
 }
 
 .landing-box .cta-button {
-    margin-left: -1.25em;
+    margin-left: 15%;
 }
 
 .cta-button {
-    background-color: #FFF4B9;
-    border: solid 3px #ffd34e;
+    background-color: #ffd34e;
     border-radius: 1.5em;
-    transition: background-color 0.5s ease;
+    transition: box-shadow 0.25s ease;
     color: inherit;
+    font-weight: 400;
     display: inline-block;
-    margin: 1em 0 1em;
-    padding: .5em 1.25em .4em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    padding: .75em 1.5em .75em;
     text-decoration: none;
 }
 
 .cta-button:hover {
-    background-color: #ffd34e;
-    transition: background-color 0.5s ease;
+    box-shadow: 0 0.5em 1em 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.25s ease;
 }
 
 .cta-note {
-    color: #666;
+    color: #999;
     font-size: 15px;
     line-height: 1.5em;
+    margin-bottom: 0.5em;
 }
 
 .cta-note a {
