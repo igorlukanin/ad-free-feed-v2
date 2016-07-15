@@ -1,7 +1,4 @@
 {
-  "website": {
-    "port": 80
-  },
   "instagram": {
     "client_id": "",
     "client_secret": "",
