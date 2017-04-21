@@ -17,6 +17,7 @@
     "emoji-regexp": "^1.0.0",
     "express": "^4.13.4",
     "instagram-node": "^0.5.8",
+    "instagram-private-api": "^0.5.16",
     "promise": "^7.1.1",
     "purecss": "^0.6.0",
     "rethinkdb": "^2.2.2"

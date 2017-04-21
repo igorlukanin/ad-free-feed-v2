@@ -77,13 +77,13 @@ var init = function(clf, limits) {
     var getGoodClassProbability = function(v) {
         return clf.run(applyLimits(account.toFeatures(v), limits)).good;
     };
-    
+
     var getScore = function(V) {
         var scores = V.map(function(v) {
             var score1 = account.toClasses(v).good;
             var score2 = getGoodClassProbability(v);
 
-            return (score1 - score2) * (score1 - score2);
+            return Math.round(score2) === score1 ? 1 : 0;
         });
 
         return scores.reduce(function(a, b) { return a + b; }) / scores.length;
@@ -99,14 +99,14 @@ var load = function() {
     var state = loadState(),
         clf = state ? recreateClassifier(state) : dummyClassifier,
         limits = loadLimits();
-    
+
     return init(clf, limits);
 };
 
 var train = function(V) {
     var limits = account.toLimits(V),
         clf = trainClassifier(V, limits);
-    
+
     return init(clf, limits);
 };
 

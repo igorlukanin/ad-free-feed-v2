@@ -2,6 +2,8 @@
   "instagram": {
     "client_id": "",
     "client_secret": "",
-    "redirect_uri": "http://less.igor.lukanin.name/login/complete"
+    "redirect_uri": "http://less.igor.lukanin.name/login/complete",
+    "username": "",
+    "password": ""
   }
 }

@@ -2,14 +2,16 @@
   "website": {
     "port": 3005,
     "collect_retry_interval_ms": 3000,
-    "collect_retry_max_attempts": 10
+    "collect_retry_max_attempts": 15
   },
   "instagram": {
     "client_id": "",
     "client_secret": "",
     "scopes": [ "relationships" ],
-    "scopes_after_review": [ "follower_list", "relationships" ],
-    "redirect_uri": "http://localhost:3005/login/complete"
+    "redirect_uri": "http://localhost:3005/login/complete",
+    "username": "",
+    "password": "",
+    "followersLimit": 10
   },
   "rethinkdb": {
     "host": "localhost",

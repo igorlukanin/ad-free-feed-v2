@@ -1,0 +1,178 @@
+<% extend 'layouts/default.ect' %>
+
+<div class="landing-box">
+    <div class="landing-box-text">
+        <p class="landing-box-title">Less Distraction</p>
+        <p class="landing-box-subtitle">Tired of inhuman followers and&nbsp;ill&nbsp;advertisers on&nbsp;Instagram?</p>
+        <p>Bots make up&nbsp;to half of&nbsp;likes and&nbsp;subscriptions in&nbsp;your&nbsp;notification feed. Let me show:</p>
+
+        <input type="text" class="cta-input-field" placeholder="Your username on Instagram"/>
+        <p class="cta-note">For public accounts only.</p>
+
+        <a class="cta-button cta-button_check">Check my account</a>
+    </div><!--
+    -->
+    <div>
+        <div class="landing-box-visual"></div>
+        <div class="landing-box-results landing-box-any_hidden">
+            <p>Real human beings:</p>
+            <div class="landing-box-results-good"></div>
+            <br/>
+            <p>Bots and ill advertisers:</p>
+            <div class="landing-box-results-bad"></div>
+            <br/>
+            <p>Wanna do something?</p>
+            <a class="cta-button cta-button_block">Block bad accounts</a>
+        </div>
+    </div>
+</div>
+
+<div class="disclosure">
+    <p><img src="http://igor.lukanin.name/img/avatar.jpg"></p>
+    <br/>
+
+    <p class='title'>Hi, I'm <a href="http://igor.lukanin.name" target="_blank">Igor</a>.</p>
+    <p>I've created this web site and trained it to detect bad accounts on Instagram.</p>
+    <p><b>But I can't help you block any of them.</b> Instagram has turned down my app which blocked bad accounts via its API. <a href="https://medium.com/@igorlukanin/less-distraction-for-instagram-d1d08f300d19" target="_blank">Read&nbsp;more</a>.</p>
+    <p>That's why I've written an open letter to Kevin Weil, Head of Product at Instagram. You can help me spead the word.<p>
+
+    <br/>
+    <p>1. <b><a href="#" target="_blank">Read&nbsp;the letter</a></b>.</p>
+    <p>2. <b>Share it</b>.</p>
+
+    <div class="likely likely-big" data-url="" data-title="">
+        <div class="facebook">Share</div>
+        <div class="twitter">Tweet</div>
+        <div class="telegram">Send</div>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+    <p>Thank you.</p>
+</div>
+
+<script>
+(function() {
+    d3.select('.cta-input-field').node().focus();
+
+    var updateAccounts = function(selector, followers) {
+        var selection = d3.select(selector)
+            .selectAll('*')
+            .data(followers, function(data) { return data.account_id; });
+
+        selection
+            .exit()
+            .remove();
+
+        var account = selection
+            .enter()
+            .append('div')
+            .classed('landing-account', true);
+
+        account.append('img')
+            .classed('landing-account-image', true)
+            .attr('src', function(data) {
+                return data.profile_picture;
+            });
+
+        var texts = account.append('div')
+            .classed('landing-account-texts', true);
+
+        texts.append('div')
+            .classed('landing-account-title', true)
+            .append('a')
+            .classed('landing-account_bad', function(data) {
+                return data.good < 0.5;
+            })
+            .attr('href', function(data) {
+                return 'https://instagram.com/' + data.username;
+            })
+            .attr('target', '_blank')
+            .text(function(data) {
+                return data.username;
+            });
+
+        texts.append('div')
+            .classed('landing-account-fullname', true)
+            .classed('landing-account_bad', function(data) {
+                return data.good < 0.5;
+            })
+            .text(function(data) {
+                return data.full_name;
+            });
+
+        texts.append('div')
+            .classed('landing-account-bio', true)
+            .classed('landing-account_bad', function(data) {
+                return data.good < 0.5;
+            })
+            .text(function(data) {
+                return data.bio;
+            });
+
+        texts.append('a')
+            .classed('landing-account-website', true)
+            .classed('landing-account_bad', function(data) {
+                return data.good < 0.5;
+            })
+            .attr('href', function(data) {
+                return data.website;
+            })
+            .attr('target', '_blank')
+            .text(function(data) {
+                return data.website;
+            });
+    };
+
+    d3.select('.cta-button_check')
+        .on('click', function() {
+            var value = d3.select('.cta-input-field').property('value');
+
+            d3.select('.landing-box-visual').classed('landing-box-any_shifted', true);
+            d3.select('.landing-box-results').classed('landing-box-any_shifted', true);
+
+            d3.json('/check.json?username=' + encodeURIComponent(value), function (result) {
+                if (result.err !== undefined || result.followers !== undefined && result.followers.length === 0) {
+                    console.log(result.err);
+
+                    d3.select('.landing-box-visual').classed('landing-box-any_shifted', false);
+                    d3.select('.landing-box-results').classed('landing-box-any_shifted', false);
+
+                    d3.select('.cta-input-field')
+                        .classed('cta-input-field_highlight', true)
+                        .node().focus();
+                }
+                else {
+                    d3.select('.cta-input-field').classed('cta-input-field_highlight', false);
+                    d3.select('.landing-box-results').classed('landing-box-any_hidden', false);
+
+                    var goodAccounts = result.followers.filter(function(follower) {
+                        return follower.good > 0.5;
+                    }).slice(0, 3);
+
+                    var badAccounts = result.followers.filter(function(follower) {
+                        return follower.good < 0.5;
+                    }).slice(0, 3);
+
+                    updateAccounts('.landing-box-results-good', goodAccounts);
+                    updateAccounts('.landing-box-results-bad', badAccounts);
+                }
+            });
+        });
+
+        d3.select('.cta-button_block')
+            .on('click', function() {
+                d3.transition()
+                    .duration(1000)
+                    .tween("scroll", scrollTween(document.body.getBoundingClientRect().height - window.innerHeight));
+
+                function scrollTween(offset) {
+                    return function() {
+                        var i = d3.interpolateNumber(window.pageYOffset || document.documentElement.scrollTop, offset);
+                        return function(t) { scrollTo(0, i(t)); };
+                    };
+                }
+            });
+})();
+</script>
